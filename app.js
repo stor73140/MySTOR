@@ -47,7 +47,9 @@ location.reload()
 function showTab(id){
 
 document.querySelectorAll(".tab").forEach(t=>t.classList.add("hidden"))
-document.getElementById(id).classList.remove("hidden")
+const target = document.getElementById(id);
+    if(target) {
+        target.classList.remove("hidden");
 
 }
 
@@ -82,4 +84,4 @@ document.getElementById("addMsg").innerText="Erreur"
 
 })
 
-}
+

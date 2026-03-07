@@ -112,3 +112,6 @@ input {
 }
 
 .hidden { display: none !important; }
+.hidden{
+display:none;
+}

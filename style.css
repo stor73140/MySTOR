@@ -1,65 +1,114 @@
-
-body{
-font-family:Arial;
-margin:0;
-background:#1b1f24;
-color:white;
+:root {
+    --blue-soft: #7ba6cf;
+    --blue-dark: #4a76a8;
+    --bg-light: #f0f4f8;
+    --text-dark: #333;
 }
 
-header{
-background:#111;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: var(--bg-light);
+    color: var(--text-dark);
 }
 
-nav{
-display:flex;
-gap:10px;
-padding:10px;
-background:#222;
-overflow:auto;
+/* Arrière-plan avec les télécabines */
+.screen {
+    min-height: 100vh;
+    background: url('https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=1000') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
 }
 
-button{
-background:#ff7a00;
-border:none;
-padding:10px 15px;
-color:white;
-font-weight:bold;
-border-radius:6px;
+.background-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.2); /* Voile léger pour la lisibilité */
 }
 
-input,select{
-display:block;
-margin:10px 0;
-padding:10px;
-width:100%;
-border-radius:5px;
-border:none;
+/* Style de la carte de Login */
+.card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px 20px;
+    width: 85%;
+    max-width: 350px;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-.card{
-background:#222;
-padding:30px;
-max-width:320px;
-margin:auto;
-margin-top:100px;
-border-radius:10px;
-text-align:center;
+.logo-container h1 {
+    font-size: 3rem;
+    font-style: italic;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -2px;
 }
 
-.screen.hidden{display:none;}
-.tab.hidden{display:none;}
-
-.tab{
-padding:20px;
+.subtitle {
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.piece{
-background:#2c3137;
-padding:10px;
-margin:10px 0;
-border-radius:6px;
+/* Grille de Navigation (Tuiles) */
+.grid-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
 }
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.icon-box.blue { background: var(--blue-soft); color: white; }
+.icon-box.gray { background: #94a3b8; color: white; }
+
+.nav-item span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Inputs et Boutons */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background: var(--blue-dark);
+    color: white;
+    width: 100%;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.hidden { display: none !important; }

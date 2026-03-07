@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock RM</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="loginScreen" class="screen">
+  <div class="card">
+    <h1>Stock RM</h1>
+    <input id="login" placeholder="Login">
+    <input id="password" type="password" placeholder="Mot de passe">
+    <button onclick="login()">Connexion</button>
+    <p id="loginMsg"></p>
+  </div>
+</div>
+
+<div id="appScreen" class="screen hidden">
+
+<header>
+<h2>Stock Remontées Mécaniques</h2>
+<button onclick="logout()">Déconnexion</button>
+</header>
+
+<nav>
+<button onclick="showTab('meca')">Stock mécanique</button>
+<button onclick="showTab('elec')">Stock électrique</button>
+<button onclick="showTab('add')">Ajouter pièce</button>
+<button id="adminTab" class="hidden" onclick="showTab('admin')">Paramétrage</button>
+</nav>
+
+<section id="meca" class="tab">
+<h3>Stock mécanique</h3>
+<div id="mecaList"></div>
+</section>
+
+<section id="elec" class="tab hidden">
+<h3>Stock électrique</h3>
+<div id="elecList"></div>
+</section>
+
+<section id="add" class="tab hidden">
+<h3>Ajouter / Modifier une pièce</h3>
+
+<select id="stockType">
+<option value="stock mécanique">Stock mécanique</option>
+<option value="stock électrique">Stock électrique</option>
+</select>
+
+<input id="type" placeholder="Type">
+<input id="designation" placeholder="Désignation">
+<input id="quantite" type="number" placeholder="Quantité">
+<input id="emplacement" placeholder="Emplacement">
+
+<button onclick="addPiece()">Ajouter / Mettre à jour</button>
+
+<p id="addMsg"></p>
+
+</section>
+
+<section id="admin" class="tab hidden">
+<h3>Paramétrage Admin</h3>
+<p>Gestion future : utilisateurs / emplacements</p>
+</section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

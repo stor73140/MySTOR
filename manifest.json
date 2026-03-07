@@ -1,0 +1,16 @@
+
+{
+"name":"Stock RM",
+"short_name":"StockRM",
+"start_url":"index.html",
+"display":"standalone",
+"background_color":"#1b1f24",
+"theme_color":"#ff7a00",
+"icons":[
+{
+"src":"icon.png",
+"sizes":"192x192",
+"type":"image/png"
+}
+]
+}

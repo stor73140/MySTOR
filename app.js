@@ -50,7 +50,6 @@ document.querySelectorAll(".tab").forEach(t=>t.classList.add("hidden"))
 const target = document.getElementById(id);
     if(target) {
         target.classList.remove("hidden");
-
 }
 
 function addPiece(){

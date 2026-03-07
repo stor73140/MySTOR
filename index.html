@@ -1,63 +1,112 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STOR | Gestion de Stock</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STOR | Gestion de Stock</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div id="loginScreen" class="screen">
-    <div class="background-overlay"></div>
-    <div class="card">
-        <div class="logo-container">
-            <h1>STOR</h1>
-            <p class="subtitle">SOCIÉTÉ DES TÉLÉPHÉRIQUES D'ORELLE</p>
-        </div>
-        <input id="login" placeholder="Identifiant">
-        <input id="password" type="password" placeholder="Mot de passe">
-        <button class="btn-primary" onclick="login()">Connexion</button>
-        <p id="loginMsg"></p>
-    </div>
+<div class="background-overlay"></div>
+
+<div class="card">
+<div class="logo-container">
+<h1>STOR</h1>
+<p class="subtitle">SOCIÉTÉ DES TÉLÉPHÉRIQUES D'ORELLE</p>
 </div>
 
+<input id="login" placeholder="Identifiant">
+<input id="password" type="password" placeholder="Mot de passe">
+
+<button onclick="login()">Connexion</button>
+
+<p id="loginMsg"></p>
+
+</div>
+</div>
+
+
 <div id="appScreen" class="screen hidden">
-    <header>
-        <div class="header-content">
-            <span class="brand">STOR</span>
-            <button class="btn-logout" onclick="logout()">Déconnexion</button>
-        </div>
-    </header>
 
-    <div class="main-container">
-        <nav class="grid-nav">
-            <div class="nav-item" onclick="showTab('meca')">
-                <div class="icon-box blue">📄</div>
-                <span>Stock mécanique</span>
-            </div>
-            <div class="nav-item" onclick="showTab('elec')">
-                <div class="icon-box blue">⚡</div>
-                <span>Stock électrique</span>
-            </div>
-            <div class="nav-item" onclick="showTab('add')">
-                <div class="icon-box blue">➕</div>
-                <span>Ajouter pièce</span>
-            </div>
-            <div id="adminTab" class="nav-item hidden" onclick="showTab('admin')">
-                <div class="icon-box gray">⚙️</div>
-                <span>Paramétrage</span>
-            </div>
-        </nav>
+<header>
+<div class="header-content">
+<span class="brand">STOR</span>
+<button onclick="logout()">Déconnexion</button>
+</div>
+</header>
 
-        <section id="meca" class="tab hidden">
-            <h3>Stock mécanique</h3>
-            <div id="mecaList"></div>
-        </section>
+<div class="main-container">
 
-        </div>
+<nav class="grid-nav">
+
+<div class="nav-item" onclick="showTab('meca')">
+<div class="icon-box blue">🔧</div>
+<span>Stock mécanique</span>
+</div>
+
+<div class="nav-item" onclick="showTab('elec')">
+<div class="icon-box blue">⚡</div>
+<span>Stock électrique</span>
+</div>
+
+<div class="nav-item" onclick="showTab('add')">
+<div class="icon-box blue">➕</div>
+<span>Ajouter pièce</span>
+</div>
+
+<div id="adminTab" class="nav-item hidden" onclick="showTab('admin')">
+<div class="icon-box gray">⚙️</div>
+<span>Paramétrage</span>
+</div>
+
+</nav>
+
+
+<section id="meca" class="tab hidden">
+<h3>Stock mécanique</h3>
+<div id="mecaList"></div>
+</section>
+
+
+<section id="elec" class="tab hidden">
+<h3>Stock électrique</h3>
+<div id="elecList"></div>
+</section>
+
+
+<section id="add" class="tab hidden">
+
+<h3>Ajouter pièce</h3>
+
+<select id="stockType">
+<option value="meca">Mécanique</option>
+<option value="elec">Électrique</option>
+</select>
+
+<input id="type" placeholder="Type">
+<input id="designation" placeholder="Désignation">
+<input id="quantite" placeholder="Quantité">
+<input id="emplacement" placeholder="Emplacement">
+
+<button onclick="addPiece()">Ajouter</button>
+
+<p id="addMsg"></p>
+
+</section>
+
+
+<section id="admin" class="tab hidden">
+<h3>Administration</h3>
+<p>Paramétrage admin</p>
+</section>
+
+</div>
 </div>
 
 <script src="app.js"></script>
+
 </body>
 </html>

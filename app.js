@@ -1,8 +1,8 @@
-
 const API = "https://script.google.com/macros/s/AKfycbzsaPD-DCytkzBtx2WYlwMMEYbmWoWR6qKJRPNBQTqVxQQuOLVudmfMbdEFKE-jX2nY/exec"
 
 let user = null
 let role = null
+
 
 function login(){
 
@@ -40,17 +40,26 @@ document.getElementById("loginMsg").innerText="Erreur login"
 
 }
 
+
 function logout(){
 location.reload()
 }
 
+
 function showTab(id){
 
-document.querySelectorAll(".tab").forEach(t=>t.classList.add("hidden"))
-const target = document.getElementById(id);
-    if(target) {
-        target.classList.remove("hidden");
+document.querySelectorAll(".tab").forEach(t=>{
+t.classList.add("hidden")
+})
+
+const target = document.getElementById(id)
+
+if(target){
+target.classList.remove("hidden")
 }
+
+}
+
 
 function addPiece(){
 
@@ -59,6 +68,7 @@ const type = document.getElementById("type").value
 const designation = document.getElementById("designation").value
 const quantite = document.getElementById("quantite").value
 const emplacement = document.getElementById("emplacement").value
+
 
 fetch(API,{
 method:"POST",
@@ -83,4 +93,4 @@ document.getElementById("addMsg").innerText="Erreur"
 
 })
 
-
+}

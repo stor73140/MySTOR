@@ -134,15 +134,22 @@ function loadEmplacements() {
     .then(r => r.json())
     .then(data => {
         const select = document.getElementById("emplacement");
-        // On garde la première option vide
-        select.innerHTML = '<option value="">Sélectionner un emplacement...</option>';
-        data.forEach(place => {
-            let opt = document.createElement("option");
-            opt.value = place.name;
-            opt.innerText = place.name;
-            select.appendChild(opt);
-        });
-    });
+        if (!select) return;
+
+        // On vérifie si data est bien un tableau (Array)
+        if (Array.isArray(data)) {
+            select.innerHTML = '<option value="">Sélectionner un emplacement...</option>';
+            data.forEach(place => {
+                let opt = document.createElement("option");
+                opt.value = place.name;
+                opt.innerText = place.name;
+                select.appendChild(opt);
+            });
+        } else {
+            console.error("Le serveur n'a pas renvoyé un tableau :", data);
+        }
+    })
+    .catch(err => console.error("Erreur réseau :", err));
 }
 
 function logout() { location.reload(); }

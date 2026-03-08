@@ -96,9 +96,53 @@ function addPiece() {
     });
 }
 
+// 1. CHARGEMENT AUTO : Modifier la fonction showTab pour charger le stock
 function showTab(id) {
     document.querySelectorAll(".tab").forEach(t => t.classList.add("hidden"));
-    document.getElementById(id).classList.remove("hidden");
+    const target = document.getElementById(id);
+    if (target) {
+        target.classList.remove("hidden");
+        // Si on ouvre un onglet de stock, on rafraîchit les données
+        if (id === 'meca' || id === 'elec') {
+            loadStock();
+        }
+        // Si on ouvre l'onglet d'ajout, on charge les emplacements
+        if (id === 'add') {
+            loadEmplacements();
+        }
+    }
+}
+
+// 2. RECHERCHE INTELLIGENTE
+function filterStock(type) {
+    const query = document.getElementById(type === 'meca' ? 'searchMeca' : 'searchElec').value.toLowerCase();
+    const containerId = type === 'meca' ? 'mecaList' : 'elecList';
+    const cards = document.getElementById(containerId).getElementsByClassName('stock-card');
+
+    for (let card of cards) {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? "" : "none";
+    }
+}
+
+// 3. MENU DÉROULANT DES EMPLACEMENTS
+function loadEmplacements() {
+    fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: "getPlaces" })
+    })
+    .then(r => r.json())
+    .then(data => {
+        const select = document.getElementById("emplacement");
+        // On garde la première option vide
+        select.innerHTML = '<option value="">Sélectionner un emplacement...</option>';
+        data.forEach(place => {
+            let opt = document.createElement("option");
+            opt.value = place.name;
+            opt.innerText = place.name;
+            select.appendChild(opt);
+        });
+    });
 }
 
 function logout() { location.reload(); }

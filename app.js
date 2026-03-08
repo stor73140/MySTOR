@@ -136,7 +136,7 @@ function loadEmplacements() {
         const select = document.getElementById("emplacement");
         if (!select) return;
 
-        // On vérifie si data est bien un tableau (Array)
+        // VERIFICATION : Est-ce que 'data' est bien une liste [] ?
         if (Array.isArray(data)) {
             select.innerHTML = '<option value="">Sélectionner un emplacement...</option>';
             data.forEach(place => {
@@ -146,10 +146,13 @@ function loadEmplacements() {
                 select.appendChild(opt);
             });
         } else {
-            console.error("Le serveur n'a pas renvoyé un tableau :", data);
+            // Si c'est un message d'erreur, on l'affiche pour comprendre
+            console.error("Le serveur n'a pas renvoyé une liste, mais ceci :", data);
+            select.innerHTML = '<option value="">Erreur de chargement</option>';
         }
     })
-    .catch(err => console.error("Erreur réseau :", err));
+    .catch(err => {
+        console.error("Erreur réseau ou JSON mal formé :", err);
+    });
 }
-
 function logout() { location.reload(); }

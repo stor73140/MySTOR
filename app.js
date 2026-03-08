@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbzsaPD-DCytkzBtx2WYlwMMEYbmWoWR6qKJRPNBQTqVxQQuOLVudmfMbdEFKE-jX2nY/exec"
+const API = "https://script.google.com/macros/s/AKfycbz0bxZSUOMtHCYquy9-KVGKtzTkgyKcto2ep6Yaj-KTnudrH124czhPhxCmz-jfCFE/exec"
 
 let user = null
 let role = null
@@ -11,6 +11,7 @@ const password = document.getElementById("password").value
 
 fetch(API,{
 method:"POST",
+mode:"no-cors",  
 body:JSON.stringify({
 action:"login",
 login:login,
@@ -72,6 +73,7 @@ const emplacement = document.getElementById("emplacement").value
 
 fetch(API,{
 method:"POST",
+mode:"no-cors",  
 body:JSON.stringify({
 action:"addPiece",
 stock:stock,

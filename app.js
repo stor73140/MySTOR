@@ -46,21 +46,26 @@ function loadStock() {
 function renderTable(divId, items, type) {
     const container = document.getElementById(divId);
     if (!items || items.length === 0) {
-        container.innerHTML = "<p>Aucune pièce en stock.</p>";
+        container.innerHTML = "<p style='text-align:center; color:gray;'>Aucun article</p>";
         return;
     }
-    let html = `<table border="1"><tr><th>Désignation</th><th>Qté</th><th>Action</th></tr>`;
+
+    let html = "";
     items.forEach(item => {
-        html += `<tr>
-            <td>${item.designation} (${item.emplacement})</td>
-            <td><b>${item.quantite}</b></td>
-            <td>
-                <button onclick="updateQty('${type}', '${item.id}', 1)">+</button>
-                <button onclick="updateQty('${type}', '${item.id}', -1)">-</button>
-            </td>
-        </tr>`;
+        html += `
+        <div class="stock-card">
+            <div class="item-details">
+                <span class="item-name">${item.designation}</span>
+                <span class="item-meta">${item.type} • Empl: ${item.emplacement}</span>
+            </div>
+            <div class="qty-control">
+                <button class="btn-mini" onclick="updateQty('${type}', '${item.id}', -1)">-</button>
+                <span class="qty-val">${item.quantite}</span>
+                <button class="btn-mini" onclick="updateQty('${type}', '${item.id}', 1)">+</button>
+            </div>
+        </div>`;
     });
-    container.innerHTML = html + "</table>";
+    container.innerHTML = html;
 }
 
 function updateQty(type, id, delta) {

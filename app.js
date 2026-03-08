@@ -1,4 +1,4 @@
-const API = "TON_URL_GOOGLE_APPS_SCRIPT"; // Remplace par ton URL de déploiement
+const API = "https://script.google.com/macros/s/AKfycbz0bxZSUOMtHCYquy9-KVGKtzTkgyKcto2ep6Yaj-KTnudrH124czhPhxCmz-jfCFE/exec"; // Remplace par ton URL de déploiement
 
 let user = null;
 let role = null;

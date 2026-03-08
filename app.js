@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbz0bxZSUOMtHCYquy9-KVGKtzTkgyKcto2ep6Yaj-KTnudrH124czhPhxCmz-jfCFE/exec";
+const API = "https://script.google.com/macros/s/AKfycbzKw-P-vqeQsrzYjI1CRvklm7f3KGaAHZj-o2ke52DnRFmwnGv_uwgLrjHed1wvOa7N/exec";
 
 let user = null;
 let role = null;

@@ -148,3 +148,25 @@ header {
 }
 
 .hidden { display: none !important; }
+.search-container {
+    padding: 10px;
+    position: sticky;
+    top: 60px;
+    background: var(--bg-dark);
+    z-index: 5;
+}
+
+.search-container input {
+    margin: 0;
+    border: 2px solid var(--primary);
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background: #0d1117;
+    color: white;
+    border: 1px solid var(--border);
+    margin: 10px 0;
+}

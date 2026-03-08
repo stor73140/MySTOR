@@ -10,32 +10,36 @@
 
 <div id="loginScreen" class="screen">
     <div class="card">
-        <h1>STOR</h1>
-        <p class="subtitle">SOCIÉTÉ DES TÉLÉPHÉRIQUES D'ORELLE</p>
+        <img src="LOGO_URL_ICI" class="app-logo" alt="STOR">
+        <h1>MySTOR</h1>
+        <p class="subtitle">Gestion de Stock</p>
         <input id="login" placeholder="Identifiant">
         <input id="password" type="password" placeholder="Mot de passe">
-        <button onclick="login()">Connexion</button>
-        <p id="loginMsg" style="color: red;"></p>
+        <button onclick="login()">Se connecter</button>
+        <p id="loginMsg" style="color:#ff4d4d; font-size:14px;"></p>
     </div>
 </div>
 
-<div id="appScreen" class="screen hidden">
+<div id="appScreen" class="screen hidden" style="display:block; padding:0;">
     <header>
-        <span class="brand">STOR</span>
-        <button onclick="logout()">Déconnexion</button>
+        <span style="font-weight:900; color:var(--primary)">MySTOR</span>
+        <button onclick="logout()" style="width:auto; padding:8px 15px; font-size:12px; background:#2d333b">Quitter</button>
     </header>
 
-    <nav class="grid-nav">
-        <div class="nav-item" onclick="showTab('meca')"><span>🔧 Méca</span></div>
-        <div class="nav-item" onclick="showTab('elec')"><span>⚡ Élec</span></div>
-        <div class="nav-item" onclick="showTab('add')"><span>➕ Ajouter</span></div>
-        <div id="adminTab" class="nav-item hidden" onclick="showTab('admin')"><span>⚙️ Admin</span></div>
-    </nav>
+    <div class="main-container">
+        <div class="grid-nav" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-bottom:20px;">
+            <button onclick="showTab('meca')">🔧</button>
+            <button onclick="showTab('elec')">⚡</button>
+            <button onclick="showTab('add')">➕</button>
+        </div>
 
-    <section id="meca" class="tab hidden">
-        <h3>Stock Mécanique</h3>
-        <div id="mecaList">Chargement...</div>
-    </section>
+        <section id="meca" class="tab">
+            <input type="text" id="searchMeca" placeholder="Rechercher une pièce..." onkeyup="filterStock('meca')">
+            <div id="mecaList"></div>
+        </section>
+        
+        </div>
+</div>
 
     <section id="elec" class="tab hidden">
         <h3>Stock Électrique</h3>

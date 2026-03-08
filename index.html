@@ -33,33 +33,39 @@
             <button onclick="showTab('add')">➕</button>
         </div>
 
-        <section id="meca" class="tab">
-            <input type="text" id="searchMeca" placeholder="Rechercher une pièce..." onkeyup="filterStock('meca')">
-            <div id="mecaList"></div>
-        </section>
-        
-        </div>
-</div>
+        <section id="meca" class="tab hidden">
+    <div class="search-container">
+        <input type="text" id="searchMeca" placeholder="🔍 Rechercher en mécanique..." onkeyup="filterStock('meca')">
+    </div>
+    <div id="mecaList">Chargement du stock...</div>
+</section>
 
-    <section id="elec" class="tab hidden">
-        <h3>Stock Électrique</h3>
-        <div id="elecList">Chargement...</div>
-    </section>
+<section id="elec" class="tab hidden">
+    <div class="search-container">
+        <input type="text" id="searchElec" placeholder="🔍 Rechercher en électrique..." onkeyup="filterStock('elec')">
+    </div>
+    <div id="elecList">Chargement du stock...</div>
+</section>
 
-    <section id="add" class="tab hidden">
-        <h3>Ajouter une pièce</h3>
+<section id="add" class="tab hidden">
+    <div class="card-add">
+        <h3>Nouvelle Pièce</h3>
         <select id="stockType">
             <option value="meca">Mécanique</option>
             <option value="elec">Électrique</option>
         </select>
         <input id="type" placeholder="Type (ex: Roulement)">
         <input id="designation" placeholder="Désignation">
-        <input id="quantite" type="number" placeholder="Quantité">
-        <input id="emplacement" placeholder="Emplacement">
+        <input id="quantite" type="number" placeholder="Quantité initiale">
+        
+        <select id="emplacement">
+            <option value="">Sélectionner un emplacement...</option>
+        </select>
+        
         <button onclick="addPiece()">Valider l'ajout</button>
         <p id="addMsg"></p>
-    </section>
-</div>
+    </div>
+</section>
 
 <script src="app.js"></script>
 </body>

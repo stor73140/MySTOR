@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbyETN3lX9p8PMNFBuIVOHVZehbxJ3-yjUEnSwem5KLxGK4stvjd4gHcLP4f3mCmUvFR/exec";
+const API = "https://script.google.com/macros/s/AKfycbyehcH0xPA_dPOXpq5Q5Dw8LhmKqjhfcOjPD9forO4syrWi_BpvfZMguPeb4GiZ7N7o/exec";
 
 let user = null;
 let role = null;
@@ -124,6 +124,7 @@ function showTab(id) {
         // Si on ouvre l'onglet d'ajout, on charge les emplacements
         if (id === 'add') {
             loadEmplacements();
+            loadTypes();
         }
     }
 }
@@ -171,3 +172,25 @@ function loadEmplacements() {
     });
 }
 function logout() { location.reload(); }
+function loadTypes() {
+    fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: "getTypes" })
+    })
+    .then(r => r.json())
+    .then(data => {
+        const select = document.getElementById("type");
+        if (!select) return;
+
+        if (Array.isArray(data)) {
+            select.innerHTML = '<option value="">Sélectionner un type...</option>';
+            data.forEach(item => {
+                let opt = document.createElement("option");
+                opt.value = item.name;
+                opt.innerText = item.name;
+                select.appendChild(opt);
+            });
+        }
+    })
+    .catch(err => console.error("Erreur chargement types:", err));
+}

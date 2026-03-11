@@ -11,8 +11,8 @@ function login() {
         method: "POST",
         body: JSON.stringify({
             action: "login",
-            login: loginVal,
-            password: passwordVal
+            user: loginVal,
+            pass: passwordVal
         })
     })
     .then(r => r.json())
@@ -77,23 +77,38 @@ function updateQty(type, id, delta) {
 }
 
 function addPiece() {
-    const body = {
-        action: "addPiece",
-        stock: document.getElementById("stockType").value,
+    const stockType = document.getElementById("stockType").value;
+    
+    const itemData = {
+        stock: stockType,
         type: document.getElementById("type").value,
         designation: document.getElementById("designation").value,
         quantite: document.getElementById("quantite").value,
         emplacement: document.getElementById("emplacement").value
     };
 
-    fetch(API, { method: "POST", body: JSON.stringify(body) })
+    // On emballe les données pour que le script Google s'y retrouve
+    const body = {
+        action: "addPiece",
+        type: stockType, // Le script Google attend 'data.type'
+        item: itemData   // Le script Google attend 'data.item'
+    };
+
+    fetch(API, { 
+        method: "POST", 
+        body: JSON.stringify(body) 
+    })
     .then(r => r.json())
     .then(data => {
         if(data.status === "added") {
-            document.getElementById("addMsg").innerText = "Pièce ajoutée !";
+            document.getElementById("addMsg").innerText = "✅ Pièce ajoutée !";
             loadStock();
+            // Optionnel : vider les champs après l'ajout
+            document.getElementById("designation").value = "";
+            document.getElementById("quantite").value = "";
         }
-    });
+    })
+    .catch(err => console.error("Erreur lors de l'ajout :", err));
 }
 
 // 1. CHARGEMENT AUTO : Modifier la fonction showTab pour charger le stock

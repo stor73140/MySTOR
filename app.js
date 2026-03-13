@@ -117,18 +117,19 @@ function showTab(id) {
     const target = document.getElementById(id);
     if (target) {
         target.classList.remove("hidden");
-        // Si on ouvre un onglet de stock, on rafraîchit les données
         if (id === 'meca' || id === 'elec') {
             loadStock();
         }
-        // Si on ouvre l'onglet d'ajout, on charge les emplacements
         if (id === 'add') {
             loadEmplacements();
             loadTypes();
         }
-        if (id === 'searchTab') { prepareSearch(); } // <--- AJOUTE CECI
-}
+        if (id === 'searchTab') { 
+            prepareSearch(); 
+        }
     }
+}
+
 
 // 2. RECHERCHE INTELLIGENTE
 function filterStock(type) {

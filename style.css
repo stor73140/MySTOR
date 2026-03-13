@@ -170,3 +170,13 @@ select {
     border: 1px solid var(--border);
     margin: 10px 0;
 }
+.search-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#searchResultList {
+    margin-top: 10px;
+}

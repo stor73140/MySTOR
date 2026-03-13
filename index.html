@@ -31,6 +31,7 @@
             <button onclick="showTab('meca')">🔧</button>
             <button onclick="showTab('elec')">⚡</button>
             <button onclick="showTab('add')">➕</button>
+            <button onclick="showTab('searchTab')">🔍 Recherche</button>
             <button id="adminTab" class="hidden" onclick="showTab('admin')">⚙️ Admin</button>
         </div>
 
@@ -47,7 +48,25 @@
     </div>
     <div id="elecList">Chargement du stock...</div>
 </section>
-
+<section id="searchTab" class="tab hidden">
+    <div class="card-add" style="margin-bottom: 20px;">
+        <h3>Recherche Avancée</h3>
+        <input type="text" id="globalSearch" placeholder="🔍 Nom de la pièce..." onkeyup="advancedSearch()">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+            <select id="filterType" onchange="advancedSearch()">
+                <option value="">Tous les types</option>
+            </select>
+            <select id="filterPlace" onchange="advancedSearch()">
+                <option value="">Tous les lieux</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id="searchResultList">
+        <p style="text-align:center; color:var(--text-dim);">Entrez un nom ou choisissez un filtre</p>
+    </div>
+</section>
 <section id="add" class="tab hidden">
     <div class="card-add">
         <h3>Nouvelle Pièce</h3>

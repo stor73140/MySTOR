@@ -129,7 +129,6 @@ function showTab(id) {
         if (id === 'searchTab') { prepareSearch(); } // <--- AJOUTE CECI
 }
     }
-}
 
 // 2. RECHERCHE INTELLIGENTE
 function filterStock(type) {

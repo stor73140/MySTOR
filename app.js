@@ -126,6 +126,8 @@ function showTab(id) {
             loadEmplacements();
             loadTypes();
         }
+        if (id === 'searchTab') { prepareSearch(); } // <--- AJOUTE CECI
+}
     }
 }
 
@@ -193,4 +195,72 @@ function loadTypes() {
         }
     })
     .catch(err => console.error("Erreur chargement types:", err));
+}
+let fullStockData = []; // Stockage global pour la recherche
+
+// Charge les filtres et prépare les données quand on ouvre l'onglet
+function prepareSearch() {
+    // On récupère tout le stock (meca + elec)
+    fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: "getStock" })
+    })
+    .then(r => r.json())
+    .then(data => {
+        fullStockData = [...data.meca.map(i => ({...i, category:'meca'})), 
+                         ...data.elec.map(i => ({...i, category:'elec'}))];
+        loadFilterOptions();
+    });
+}
+
+function loadFilterOptions() {
+    // On remplit les filtres Type et Emplacement à partir de ce qu'on a déjà chargé
+    const types = [...new Set(fullStockData.map(item => item.type))];
+    const places = [...new Set(fullStockData.map(item => item.emplacement))];
+
+    const typeSelect = document.getElementById("filterType");
+    const placeSelect = document.getElementById("filterPlace");
+
+    typeSelect.innerHTML = '<option value="">Tous les types</option>' + 
+        types.map(t => `<option value="${t}">${t}</option>`).join('');
+    
+    placeSelect.innerHTML = '<option value="">Tous les lieux</option>' + 
+        places.map(p => `<option value="${p}">${p}</option>`).join('');
+}
+
+function advancedSearch() {
+    const query = document.getElementById("globalSearch").value.toLowerCase();
+    const typeF = document.getElementById("filterType").value;
+    const placeF = document.getElementById("filterPlace").value;
+
+    const filtered = fullStockData.filter(item => {
+        const matchName = item.designation.toLowerCase().includes(query);
+        const matchType = typeF === "" || item.type === typeF;
+        const matchPlace = placeF === "" || item.emplacement === placeF;
+        return matchName && matchType && matchPlace;
+    });
+
+    renderSearchResults(filtered);
+}
+
+function renderSearchResults(results) {
+    const container = document.getElementById("searchResultList");
+    if (results.length === 0) {
+        container.innerHTML = '<p style="text-align:center; padding:20px;">Aucun résultat</p>';
+        return;
+    }
+
+    container.innerHTML = results.map(item => `
+        <div class="stock-card">
+            <div class="item-details">
+                <span class="item-name">${item.designation}</span>
+                <span class="item-meta">${item.type} | ${item.emplacement}</span>
+            </div>
+            <div class="qty-control">
+                <button class="btn-mini" onclick="updateQty('${item.category}', '${item.id}', -1)">-</button>
+                <span id="qty-${item.id}" style="font-weight:bold; min-width:20px; text-align:center">${item.quantite}</span>
+                <button class="btn-mini" onclick="updateQty('${item.category}', '${item.id}', 1)">+</button>
+            </div>
+        </div>
+    `).join('');
 }

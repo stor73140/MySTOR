@@ -159,32 +159,23 @@ function filterStock(type) {
 
 // 3. MENU DÉROULANT DES EMPLACEMENTS
 function loadEmplacements() {
-    fetch(API, {
-        method: "POST",
-        body: JSON.stringify({ action: "getPlaces" })
-    })
+    fetch(API, { method: "POST", body: JSON.stringify({ action: "getPlaces" }) })
     .then(r => r.json())
     .then(data => {
         const select = document.getElementById("emplacement");
-        if (!select) return;
+        const adminList = document.getElementById("adminPlacesList"); // Div à créer dans l'onglet ajouter
+        
+        select.innerHTML = '<option value="">Sélectionner un lieu...</option>';
+        let listHtml = "";
 
-        // VERIFICATION : Est-ce que 'data' est bien une liste [] ?
-        if (Array.isArray(data)) {
-            select.innerHTML = '<option value="">Sélectionner un emplacement...</option>';
-            data.forEach(place => {
-                let opt = document.createElement("option");
-                opt.value = place.name;
-                opt.innerText = place.name;
-                select.appendChild(opt);
-            });
-        } else {
-            // Si c'est un message d'erreur, on l'affiche pour comprendre
-            console.error("Le serveur n'a pas renvoyé une liste, mais ceci :", data);
-            select.innerHTML = '<option value="">Erreur de chargement</option>';
-        }
-    })
-    .catch(err => {
-        console.error("Erreur réseau ou JSON mal formé :", err);
+        data.forEach(item => {
+            select.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            if (role === 'admin') {
+                // Utilise l'action 'deletePlace' pour le script Google
+                listHtml += `<div class="admin-item">${item.name} <span onclick="deleteListOption('deletePlace', '${item.name.replace(/'/g, "\\'")}')">🗑️</span></div>`;
+            }
+        });
+        if (adminList) adminList.innerHTML = listHtml;
     });
 }
 function logout() { location.reload(); }

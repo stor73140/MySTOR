@@ -197,7 +197,7 @@ function loadTypes() {
             }
         });
         if (adminList) adminList.innerHTML = listHtml;
-    });
+    })
 
     .catch(err => console.error("Erreur chargement types:", err));
 }

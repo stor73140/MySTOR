@@ -188,26 +188,26 @@ function loadEmplacements() {
     });
 }
 function logout() { location.reload(); }
+// Exemple pour les types (faire la même logique pour les emplacements)
 function loadTypes() {
-    fetch(API, {
-        method: "POST",
-        body: JSON.stringify({ action: "getTypes" })
-    })
+    fetch(API, { method: "POST", body: JSON.stringify({ action: "getTypes" }) })
     .then(r => r.json())
     .then(data => {
         const select = document.getElementById("type");
-        if (!select) return;
+        const adminList = document.getElementById("adminTypesList"); // Crée ce div dans ton HTML
+        
+        select.innerHTML = '<option value="">Sélectionner un type...</option>';
+        let listHtml = "";
 
-        if (Array.isArray(data)) {
-            select.innerHTML = '<option value="">Sélectionner un type...</option>';
-            data.forEach(item => {
-                let opt = document.createElement("option");
-                opt.value = item.name;
-                opt.innerText = item.name;
-                select.appendChild(opt);
-            });
-        }
-    })
+        data.forEach(item => {
+            select.innerHTML += `<option value="${item.name}">${item.name}</option>`;
+            if (role === 'admin') {
+                listHtml += `<div class="admin-item">${item.name} <span onclick="deleteListOption('deleteType', '${item.name}')">🗑️</span></div>`;
+            }
+        });
+        if (adminList) adminList.innerHTML = listHtml;
+    });
+}
     .catch(err => console.error("Erreur chargement types:", err));
 }
 let fullStockData = []; // Stockage global pour la recherche
@@ -259,24 +259,25 @@ function advancedSearch() {
 
 function renderSearchResults(results) {
     const container = document.getElementById("searchResultList");
-    if (results.length === 0) {
-        container.innerHTML = '<p style="text-align:center; padding:20px;">Aucun résultat</p>';
-        return;
-    }
+    container.innerHTML = results.map(item => {
+        // Bouton supprimer visible uniquement pour l'admin
+        const deleteBtn = (role === 'admin') ? 
+            `<button class="btn-delete" onclick="deleteItem('${item.category}', '${item.id}', '${item.designation.replace(/'/g, "\\'")}')">🗑️</button>` : '';
 
-    container.innerHTML = results.map(item => `
+        return `
         <div class="stock-card">
             <div class="item-details">
                 <span class="item-name">${item.designation}</span>
                 <span class="item-meta">${item.type} | ${item.emplacement}</span>
             </div>
             <div class="qty-control">
+                ${deleteBtn}
                 <button class="btn-mini" onclick="updateQty('${item.category}', '${item.id}', -1)">-</button>
-                <span id="qty-${item.id}" style="font-weight:bold; min-width:20px; text-align:center">${item.quantite}</span>
+                <span id="qty-${item.id}">${item.quantite}</span>
                 <button class="btn-mini" onclick="updateQty('${item.category}', '${item.id}', 1)">+</button>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 }
 function addToList(sheetName, value) {
   const sheet = SpreadsheetApp.getActive().getSheetByName(sheetName);
@@ -329,4 +330,30 @@ function loadHistory() {
         const div = document.getElementById("historyDisplay");
         div.innerHTML = data.map(h => `<div><b>${new Date(h[0]).toLocaleDateString()}</b>: ${h[1]} a fait ${h[2]} sur ${h[3]}</div>`).join('<hr>');
     });
+}
+let allUsers = [];
+
+function loadUsers() {
+    fetch(API, { method: "POST", body: JSON.stringify({ action: "getUsers" }) }) // Crée l'action getUsers dans ton script Google
+    .then(r => r.json())
+    .then(data => {
+        allUsers = data;
+        renderUsers(data);
+    });
+}
+
+function renderUsers(list) {
+    const container = document.getElementById("userListDisplay");
+    container.innerHTML = list.map(u => `
+        <div class="admin-item">
+            <span>${u.login} (${u.role})</span>
+            <button onclick="deleteListOption('deleteUser', '${u.login}')">🗑️</button>
+        </div>
+    `).join('');
+}
+
+function filterUsers() {
+    const q = document.getElementById("searchUser").value.toLowerCase();
+    const filtered = allUsers.filter(u => u.login.toLowerCase().includes(q));
+    renderUsers(filtered);
 }

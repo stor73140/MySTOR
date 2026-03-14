@@ -74,15 +74,23 @@
             <option value="meca">Mécanique</option>
             <option value="elec">Électrique</option>
         </select>
-        <select id="type">
-    <option value="">Chargement des types...</option>
-</select>
+        <div class="input-group">
+    <label>Type de pièce :</label>
+    <select id="type">
+        <option value="">Chargement des types...</option>
+    </select>
+    <div id="adminTypesList"></div> </div>
         <input id="designation" placeholder="Désignation">
         <input id="quantite" type="number" placeholder="Quantité initiale">
         
-        <select id="emplacement">
-            <option value="">Sélectionner un emplacement...</option>
-        </select>
+        <div class="input-group">
+    <label>Emplacement :</label>
+
+    <select id="emplacement">
+        <option value="">Chargement des lieux...</option>
+    </select>
+    <div id="adminPlacesList"></div> 
+    </div>
         
         <button onclick="addPiece()">Valider l'ajout</button>
         <p id="addMsg"></p>

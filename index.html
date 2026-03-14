@@ -88,7 +88,40 @@
         <p id="addMsg"></p>
     </div>
 </section>
+<section id="admin" class="tab hidden">
+    <div class="admin-grid">
+        <div class="card-add">
+            <h3>⚙️ Configuration Listes</h3>
+            <div class="input-group">
+                <input type="text" id="newTypeName" placeholder="Nouveau Type (ex: Courroie)">
+                <button onclick="addListOption('addType', 'newTypeName')" class="btn-admin">Ajouter Type</button>
+            </div>
+            <div class="input-group" style="margin-top:10px;">
+                <input type="text" id="newPlaceName" placeholder="Nouveau Lieu (ex: Rack C)">
+                <button onclick="addListOption('addPlace', 'newPlaceName')" class="btn-admin">Ajouter Lieu</button>
+            </div>
+        </div>
 
+        <div class="card-add" style="margin-top:20px;">
+            <h3>👥 Gestion Utilisateurs</h3>
+            <input type="text" id="newUserLogin" placeholder="Login">
+            <input type="password" id="newUserPass" placeholder="Mot de passe">
+            <select id="newUserRole">
+                <option value="user">Rôle : Utilisateur</option>
+                <option value="admin">Rôle : Administrateur</option>
+            </select>
+            <button onclick="manageUser('addUser')" class="btn-admin" style="width:100%; margin-top:10px;">Créer l'utilisateur</button>
+            <div id="userListDisplay" style="margin-top:15px; font-size: 0.9em;"></div>
+        </div>
+
+        <div class="card-add" style="margin-top:20px;">
+            <h3>📜 Historique Récent</h3>
+            <div id="historyDisplay" style="max-height: 200px; overflow-y: auto; font-size: 0.8em; background: #f9f9f9; padding: 5px;">
+                Chargement de l'historique...
+            </div>
+        </div>
+    </div>
+</section>
 <script src="app.js"></script>
 </body>
 </html>

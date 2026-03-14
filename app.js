@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbwX1GEkfO-u0l9FGk_0-Fo-hvs-h2y1SytuPk1uKmyJokWLoXp0alwoQE3tqJaOPMnj/exec";
+const API = "https://script.google.com/macros/s/AKfycbzCPUIZccNJ_0jM2xNZPbzZnAM6VCQ0_nHFFI43dmrw1Dlhd1PIwFDdvx6LaMLndap7/exec";
 
 let user = null;
 let role = null;
@@ -69,11 +69,23 @@ function renderTable(divId, items, type) {
 }
 
 function updateQty(type, id, delta) {
+    const qtySpan = document.getElementById(`qty-${id}`);
+    const itemName = qtySpan.closest('.stock-card').querySelector('.item-name').innerText; // Récupère le nom pour l'historique
+
     fetch(API, {
         method: "POST",
-        body: JSON.stringify({ action: "updateQty", type: type, id: id, delta: delta })
-    })
-    .then(() => loadStock()); // Rafraîchit la liste
+        body: JSON.stringify({ 
+            action: "updateQty", 
+            type: type, 
+            id: id, 
+            delta: delta,
+            user: user, // Envoie le nom de l'utilisateur connecté
+            designation: itemName // Envoie le nom de la pièce
+        })
+    }).then(() => {
+        loadStock();
+        if (role === 'admin') loadHistory(); // Rafraîchit l'historique si on est admin
+    });
 }
 
 function addPiece() {
@@ -127,6 +139,8 @@ function showTab(id) {
         if (id === 'searchTab') { 
             prepareSearch(); 
         }
+        if (id === 'admin') { 
+            loadHistory(); }
     }
 }
 
@@ -263,4 +277,56 @@ function renderSearchResults(results) {
             </div>
         </div>
     `).join('');
+}
+function addToList(sheetName, value) {
+  const sheet = SpreadsheetApp.getActive().getSheetByName(sheetName);
+  sheet.appendRow([value]);
+  return json({status: "success"});
+}
+
+function manageUsers(mode, userData) {
+  const sheet = SpreadsheetApp.getActive().getSheetByName("users");
+  if (mode === "add") {
+    sheet.appendRow([userData.login, userData.pass, userData.role]);
+    return json({status: "success"});
+  }
+}
+
+function getHistory() {
+  const sheet = SpreadsheetApp.getActive().getSheetByName("historique");
+  if (!sheet) return json([]);
+  const data = sheet.getRange(2, 1, Math.min(20, sheet.getLastRow()), 4).getValues();
+  return json(data.reverse()); // Les plus récents en premier
+}
+function addListOption(action, inputId) {
+    const val = document.getElementById(inputId).value;
+    if (!val) return;
+    fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: action, name: val })
+    }).then(() => {
+        alert("Ajouté avec succès !");
+        document.getElementById(inputId).value = "";
+    });
+}
+
+function manageUser(action) {
+    const userObj = {
+        login: document.getElementById("newUserLogin").value,
+        pass: document.getElementById("newUserPass").value,
+        role: document.getElementById("newUserRole").value
+    };
+    fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ action: action, user: userObj })
+    }).then(() => alert("Utilisateur créé !"));
+}
+
+function loadHistory() {
+    fetch(API, { method: "POST", body: JSON.stringify({ action: "getHistory" }) })
+    .then(r => r.json())
+    .then(data => {
+        const div = document.getElementById("historyDisplay");
+        div.innerHTML = data.map(h => `<div><b>${new Date(h[0]).toLocaleDateString()}</b>: ${h[1]} a fait ${h[2]} sur ${h[3]}</div>`).join('<hr>');
+    });
 }

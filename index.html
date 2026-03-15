@@ -109,12 +109,33 @@
                 <button onclick="addListOption('addPlace', 'newPlaceName')" class="btn-admin">Ajouter Lieu</button>
             </div>
         </div>
-        <div class="card-add">
-    <h3>👥 Gestion Utilisateurs</h3>
-    <input type="text" id="searchUser" placeholder="🔍 Chercher un utilisateur..." onkeyup="filterUsers()">
-    <div id="userListDisplay" class="admin-scroll-list">
+
+        <div class="card-add" style="margin-top:20px;">
+            <h3>➕ Nouvel Utilisateur</h3>
+            <input type="text" id="newUserLogin" placeholder="Login">
+            <input type="password" id="newUserPass" placeholder="Mot de passe">
+            <select id="newUserRole">
+                <option value="user">Rôle : Utilisateur</option>
+                <option value="admin">Rôle : Administrateur</option>
+            </select>
+            <button onclick="manageUser('addUser')" class="btn-admin" style="width:100%; margin-top:10px;">Créer l'utilisateur</button>
         </div>
-</div>
+
+        <div class="card-add" style="margin-top:20px;">
+            <h3>👥 Liste des Utilisateurs</h3>
+            <input type="text" id="searchUser" placeholder="🔍 Chercher un login..." onkeyup="filterUsers()">
+            <div id="userListDisplay" class="admin-scroll-list" style="margin-top:15px; border:1px solid #eee; padding:5px;">
+                </div>
+        </div>
+
+        <div class="card-add" style="margin-top:20px;">
+            <h3>📜 Historique Récent</h3>
+            <div id="historyDisplay" style="max-height: 200px; overflow-y: auto; font-size: 0.8em; background: #f9f9f9; padding: 5px;">
+                Chargement...
+            </div>
+        </div>
+    </div>
+</section>
 
         <div class="card-add" style="margin-top:20px;">
             <h3>👥 Gestion Utilisateurs</h3>

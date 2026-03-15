@@ -2,6 +2,7 @@ const API = "https://script.google.com/macros/s/AKfycbzaxl0M4IMx1GKELa19ntSsbMQy
 
 let user = null;
 let role = null;
+let allUsers = [];
 
 function login() {
     const loginVal = document.getElementById("login").value;
@@ -140,7 +141,8 @@ function showTab(id) {
             prepareSearch(); 
         }
         if (id === 'admin') { 
-            loadHistory(); }
+            loadHistory();
+            loadUsers();}
     }
 }
 
@@ -334,17 +336,22 @@ function loadUsers() {
 }
 
 function renderUsers(list) {
-    const container = document.getElementById("userListDisplay");
-    container.innerHTML = list.map(u => `
-        <div class="admin-item">
+    const display = document.getElementById("userListDisplay");
+    display.innerHTML = list.map(u => `
+        <div class="admin-item" style="display:flex; justify-content:space-between; margin-bottom:5px;">
             <span>${u.login} (${u.role})</span>
-            <button onclick="deleteListOption('deleteUser', '${u.login}')">🗑️</button>
+            <button onclick="deleteListOption('deleteUser', '${u.login}')" style="background:none; border:none; cursor:pointer;">🗑️</button>
         </div>
     `).join('');
 }
 
 function filterUsers() {
-    const q = document.getElementById("searchUser").value.toLowerCase();
-    const filtered = allUsers.filter(u => u.login.toLowerCase().includes(q));
-    renderUsers(filtered);
+    const searchVal = document.getElementById("searchUser").value.toLowerCase();
+    
+    // On filtre allUsers (ce qu'on a reçu de Google)
+    const filtered = allUsers.filter(user => {
+        return user.login.toLowerCase().includes(searchVal);
+    });
+    
+    renderUsers(filtered); // On ré-affiche seulement ceux qui correspondent
 }

@@ -324,7 +324,7 @@ function loadHistory() {
         div.innerHTML = data.map(h => `<div><b>${new Date(h[0]).toLocaleDateString()}</b>: ${h[1]} a fait ${h[2]} sur ${h[3]}</div>`).join('<hr>');
     });
 }
-let allUsers = [];
+
 
 function loadUsers() {
     fetch(API, { method: "POST", body: JSON.stringify({ action: "getUsers" }) }) // Crée l'action getUsers dans ton script Google
